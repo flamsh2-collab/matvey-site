@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => +b.data.pubDate - +a.data.pubDate);
+---
+<BaseLayout title="Главная" description="Демо-сайт контент-фабрики (Модуль 6).">
+  <h1>Сайт компании</h1>
+  <p>Минимальный шаблон. Фабрика «SEO-завод» наполняет блог автоматически.</p>
+  <h2>Последние статьи</h2>
+  <ul>
+    {posts.map((p) => (
+      <li><a href={`/blog/${p.id}/`}>{p.data.title}</a></li>
+    ))}
+  </ul>
+</BaseLayout>

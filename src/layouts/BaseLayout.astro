@@ -1,0 +1,25 @@
+---
+// Минимальный layout: <head> с мета + слот контента + JSON-LD.
+const { title, description, jsonld } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Блог" href="/rss.xml" />
+    {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+  </head>
+  <body>
+    <header><a href="/">Главная</a> · <a href="/blog">Блог</a></header>
+    <main><slot /></main>
+    <footer><small>© {new Date().getFullYear()}</small></footer>
+  </body>
+</html>

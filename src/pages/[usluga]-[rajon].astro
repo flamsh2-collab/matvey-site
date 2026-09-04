@@ -1,0 +1,42 @@
+---
+// Программный слой = длинный хвост из данных.
+// services.uslugi × services.rajony → страница под каждую комбинацию (3 × 4 = 12 страниц).
+// 10 услуг × 30 районов = 300 страниц одним билдом. Так pleada.shop делает 64 000 страниц.
+import services from '../data/services.json';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const u of services.uslugi) {
+    for (const r of services.rajony) {
+      paths.push({
+        params: { usluga: u.slug, rajon: r.slug },
+        props: { u, r, city: services.city },
+      });
+    }
+  }
+  return paths;
+}
+
+const { u, r, city } = Astro.props;
+const title = `${u.name} в ${r.name} (${city}) — от ${u.price_from} ₽/м²`;
+const description = `${u.name} в ${r.name}: замер бесплатно, монтаж за 1 день. Цена от ${u.price_from} ₽/м². ${city}.`;
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: u.name,
+  areaServed: `${r.name}, ${city}`,
+  offers: { '@type': 'Offer', price: u.price_from, priceCurrency: 'RUB' },
+};
+---
+<BaseLayout title={title} description={description} jsonld={jsonld}>
+  <article>
+    <h1>{u.name} в {r.name}</h1>
+    <p><strong>Коротко:</strong> {u.name.toLowerCase()} в районе «{r.name}» ({city}). Бесплатный замер в день обращения, монтаж за 1 день, цена от {u.price_from} ₽/м².</p>
+    <h2>Сколько стоит</h2>
+    <p>Цена от {u.price_from} ₽/м². Точную стоимость считаем на замере под вашу площадь.</p>
+    <h2>Как заказать в районе {r.name}</h2>
+    <p>Оставьте заявку — приедем на замер по адресу в {r.name}.</p>
+    <p><a href="/blog/">Полезные статьи по выбору потолков →</a></p>
+  </article>
+</BaseLayout>

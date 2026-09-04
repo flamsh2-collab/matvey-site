@@ -1,0 +1,15 @@
+{
+  "_doc": "Демо-данные программного слоя (длинный хвост). Каждая пара услуга×район = отдельная страница через getStaticPaths. Замени на свои услуги и районы — страницы сгенерируются автоматически.",
+  "uslugi": [
+    { "slug": "natyazhnye-potolki", "name": "Натяжные потолки", "price_from": 350 },
+    { "slug": "potolok-s-podsvetkoj", "name": "Потолок с подсветкой", "price_from": 900 },
+    { "slug": "dvuhurovnevyj-potolok", "name": "Двухуровневый потолок", "price_from": 1400 }
+  ],
+  "rajony": [
+    { "slug": "novo-savinovskij", "name": "Ново-Савиновский район" },
+    { "slug": "vahitovskij", "name": "Вахитовский район" },
+    { "slug": "sovetskij", "name": "Советский район" },
+    { "slug": "privolzhskij", "name": "Приволжский район" }
+  ],
+  "city": "Казань"
+}
