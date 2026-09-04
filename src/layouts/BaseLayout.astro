@@ -13,6 +13,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta name="theme-color" content="#1d3557" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title="Блог" href="/rss.xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -117,6 +119,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         font-size: 1.1rem;
         color: var(--muted);
         margin-bottom: 8px;
+      }
+
+      p.meta {
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 600;
+        margin: -6px 0 1.8em;
       }
 
       .badge {

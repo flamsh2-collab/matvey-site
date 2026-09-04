@@ -10,6 +10,10 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
+const wordCount = post.body?.split(/\s+/).filter(Boolean).length ?? 0;
+const readMinutes = Math.max(1, Math.round(wordCount / 200));
+const dateLabel = post.data.pubDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+
 // JSON-LD: Article + (если есть FAQ — собирается на этапе SEO в самой статье).
 const jsonld = {
   '@context': 'https://schema.org',
@@ -23,6 +27,7 @@ const jsonld = {
   <a class="back-link" href="/blog">← Все статьи</a>
   <article>
     <h1>{post.data.title}</h1>
+    <p class="meta">{dateLabel} · ≈ {readMinutes} мин чтения</p>
     <Content />
   </article>
 </BaseLayout>
