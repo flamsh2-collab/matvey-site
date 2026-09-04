@@ -6,12 +6,20 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => +b.data.pubDate - +a.data.pubDate);
 ---
 <BaseLayout title="Матвей — репетитор по математике, подготовка к ОГЭ" description="Индивидуальные занятия по математике для 8-9 класса, подготовка к ОГЭ. Москва.">
+  <span class="badge">Москва · 8–9 класс · ОГЭ</span>
   <h1>Матвей — репетитор по математике</h1>
-  <p>Индивидуальная подготовка к ОГЭ по математике. Москва.</p>
+  <p class="lede">Индивидуальная подготовка к ОГЭ по математике. Разбираемся с пробелами, доводим до уверенного результата.</p>
+
   <h2>Последние статьи</h2>
-  <ul>
+  <ul class="post-list">
     {posts.map((p) => (
-      <li><a href={`/blog/${p.id}/`}>{p.data.title}</a></li>
+      <li>
+        <a class="post-card" href={`/blog/${p.id}/`}>
+          <h3>{p.data.title}</h3>
+          <p>{p.data.description}</p>
+          <span class="read-more">Читать →</span>
+        </a>
+      </li>
     ))}
   </ul>
 </BaseLayout>

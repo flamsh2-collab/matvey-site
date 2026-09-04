@@ -1,5 +1,5 @@
 ---
-// Минимальный layout: <head> с мета + слот контента + JSON-LD.
+// Layout: <head> с мета + шапка/подвал + слот контента + JSON-LD.
 const { title, description, jsonld } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -15,11 +15,205 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title="Блог" href="/rss.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+    <style is:global>
+      :root {
+        --ink: #1c2434;
+        --muted: #5b6478;
+        --bg: #faf8f5;
+        --surface: #ffffff;
+        --border: #e7e2da;
+        --primary: #1d3557;
+        --accent: #d97b3f;
+        --accent-ink: #ffffff;
+        --radius: 14px;
+        --shadow: 0 1px 2px rgba(28, 36, 52, 0.04), 0 8px 24px rgba(28, 36, 52, 0.06);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'Manrope', -apple-system, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: var(--primary); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      header.site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 24px 20px 0;
+      }
+
+      .brand {
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+      }
+      .brand:hover { text-decoration: none; opacity: 0.85; }
+
+      nav.site-nav a {
+        margin-left: 20px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
+      nav.site-nav a:hover { color: var(--primary); }
+
+      main {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 40px 20px 80px;
+      }
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        margin: 0 0 12px;
+        color: var(--ink);
+      }
+
+      h2 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        margin: 2.2em 0 0.7em;
+        color: var(--ink);
+      }
+
+      h3 { font-size: 1.1rem; font-weight: 700; margin: 1.6em 0 0.5em; }
+
+      p { margin: 0 0 1em; }
+
+      article p, article ul, article ol { color: #2a3245; }
+      article strong { color: var(--ink); }
+
+      article ul, article ol { padding-left: 1.3em; }
+      article li { margin-bottom: 0.5em; }
+
+      hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2.5em 0;
+      }
+
+      .lede {
+        font-size: 1.1rem;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      .badge {
+        display: inline-block;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--primary);
+        background: #eaf0f7;
+        padding: 5px 12px;
+        border-radius: 999px;
+        margin-bottom: 18px;
+      }
+
+      .post-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 14px;
+      }
+
+      .post-card {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px 22px;
+        box-shadow: var(--shadow);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .post-card:hover {
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(28, 36, 52, 0.06), 0 14px 28px rgba(28, 36, 52, 0.09);
+      }
+
+      .post-card h3 {
+        margin: 0 0 6px;
+        font-size: 1.15rem;
+        color: var(--ink);
+      }
+      .post-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.96rem;
+      }
+      .post-card .read-more {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        font-weight: 600;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+      .back-link:hover { color: var(--primary); }
+
+      .cta-box {
+        margin-top: 3em;
+        padding: 24px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+      .cta-box p:last-child { margin-bottom: 0; }
+
+      footer.site-footer {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 28px 20px 40px;
+        color: var(--muted);
+        font-size: 0.88rem;
+        border-top: 1px solid var(--border);
+      }
+
+      @media (max-width: 600px) {
+        h1 { font-size: 1.6rem; }
+        header.site-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+        nav.site-nav a { margin-left: 0; margin-right: 18px; }
+      }
+    </style>
   </head>
   <body>
-    <header><a href="/">Главная</a> · <a href="/blog">Блог</a></header>
+    <header class="site-header">
+      <a class="brand" href="/">Матвей · Математика</a>
+      <nav class="site-nav">
+        <a href="/">Главная</a>
+        <a href="/blog">Блог</a>
+      </nav>
+    </header>
     <main><slot /></main>
-    <footer><small>© {new Date().getFullYear()}</small></footer>
+    <footer class="site-footer">© {new Date().getFullYear()} Матвей — репетитор по математике, Москва</footer>
   </body>
 </html>

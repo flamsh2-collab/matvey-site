@@ -20,6 +20,7 @@ const jsonld = {
 };
 ---
 <BaseLayout title={post.data.title} description={post.data.description} jsonld={jsonld}>
+  <a class="back-link" href="/blog">← Все статьи</a>
   <article>
     <h1>{post.data.title}</h1>
     <Content />

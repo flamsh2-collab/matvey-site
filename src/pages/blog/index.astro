@@ -5,13 +5,18 @@ const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => +b.data.pubDate - +a.data.pubDate);
 ---
-<BaseLayout title="Блог" description="Статьи блога.">
+<BaseLayout title="Блог — подготовка к ОГЭ по математике" description="Статьи о подготовке к ОГЭ по математике: разбор заданий, ошибки, планирование занятий.">
+  <a class="back-link" href="/">← Главная</a>
   <h1>Блог</h1>
-  <ul>
+  <p class="lede">Разборы заданий, ошибки, планирование подготовки к ОГЭ по математике.</p>
+  <ul class="post-list">
     {posts.map((p) => (
       <li>
-        <a href={`/blog/${p.id}/`}>{p.data.title}</a>
-        <p>{p.data.description}</p>
+        <a class="post-card" href={`/blog/${p.id}/`}>
+          <h3>{p.data.title}</h3>
+          <p>{p.data.description}</p>
+          <span class="read-more">Читать →</span>
+        </a>
       </li>
     ))}
   </ul>
